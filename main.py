@@ -66,6 +66,12 @@ async def handler_delete_message(event):
     print('\n'.join(res))
     send_message('\n'.join(res))
 
+
+def get_dialogs_id(client):
+    for dialog in client.iter_dialogs():
+        print(dialog.name, 'has ID', dialog.id)
+
+
 with client:
     client.start()
     client.run_until_disconnected()

@@ -12,4 +12,4 @@ class Config:
     if 'CHATS' in os.environ:
         FILTERS['chats'] = eval(os.getenv('CHATS'))
 
-    print(FILTERS)
+    
