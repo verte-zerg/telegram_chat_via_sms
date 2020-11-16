@@ -52,15 +52,14 @@ def send_message_api(service, message, user_id='me'):
     try:
         message = (service.users().messages().send(userId=user_id, body=message)
                     .execute())
-        print('Message Id: %s' % message['id'])
         return message
     except HttpError as error:
         print('An error occurred: %s' % error)
 
 
-def send_message(text):
+def send_message(text, subject):
     service = get_or_refresh_service()
-    message = create_message(MAIL_FROM, MAIL_TO, 'Message to SMS', text)
+    message = create_message(MAIL_FROM, MAIL_TO, subject, text)
     send_message_api(service, message)
 
 
