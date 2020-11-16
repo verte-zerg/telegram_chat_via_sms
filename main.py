@@ -5,19 +5,20 @@ from datetime import datetime
 
 from telethon import TelegramClient, events, utils
 
+from config import Config
 from gmail import send_message
 
 
 Message = NamedTuple('Message', [('user', str), ('dt', datetime), ('text', str)])
 
-api_id = os.getenv('API_ID')
-api_hash = os.getenv('API_HASH')
+api_id = Config.API_ID
+api_hash = Config.API_HASH
 
 client = TelegramClient('anon', api_id, api_hash)
 
 messages: Dict[int, Message] = {}
 
-@client.on(events.NewMessage())
+@client.on(events.NewMessage(**Config.FILTERS))
 async def handler_new_message(event):
     message = event.message
     user = await client.get_entity(message.peer_id)
@@ -30,7 +31,7 @@ async def handler_new_message(event):
     send_message('\n'.join(res))
 
 
-@client.on(events.MessageEdited())
+@client.on(events.MessageEdited(**Config.FILTERS))
 async def handler_edit_message(event):
     message = event.message
     user = await client.get_entity(message.peer_id)
@@ -48,7 +49,7 @@ async def handler_edit_message(event):
     send_message('\n'.join(res))
 
 
-@client.on(events.MessageDeleted())
+@client.on(events.MessageDeleted(**Config.FILTERS))
 async def handler_delete_message(event):
     first_id = event.deleted_ids[-1]
     if first_id in messages:

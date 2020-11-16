@@ -9,11 +9,13 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-# If modifying these scopes, delete the file token.pickle.
+from config import Config
+
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
-MAIL_FROM = os.getenv('MAIL_FROM')
-MAIL_TO = os.getenv('MAIL_TO')
+MAIL_FROM = Config.MAIL_FROM
+MAIL_TO = Config.MAIL_TO
 
 def get_or_refresh_service():
     creds = None
