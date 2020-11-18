@@ -2,12 +2,13 @@ import os
 from datetime import datetime, timezone, timedelta
 
 from telethon import TelegramClient, events, utils
+from telethon.sessions import StringSession
 
 from config import Config
 from gmail import send_message
 
 
-client = TelegramClient('anon', Config.API_ID, Config.API_HASH)
+client = TelegramClient(StringSession(Config.SESSION_STRING), Config.API_ID, Config.API_HASH)
 
 
 @client.on(events.NewMessage(**Config.FILTERS))
