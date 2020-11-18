@@ -13,3 +13,9 @@ class Config:
     FILTERS: Dict[str, Any] = {}
     if 'CHATS' in os.environ:
         FILTERS['chats'] = eval(os.getenv('CHATS'))
+
+    USER_MAP: Dict[str, int] = {}
+
+    for entity in os.getenv('USER_MAP').split(';'):
+        user_name, user_id = entity.split(':')
+        USER_MAP[user_name] = user_id
