@@ -88,16 +88,17 @@ async def send_telegram_message(user_id: int, msg: str):
 @logger.catch
 async def timer_tick(interval):
     for msg in recieve_new_messages():
-        user_id = get_user_id(msg)
-        msg_wout_user_id = msg
+        split_msg = msg.split('*')[1]
+        user_id = get_user_id(split_msg)
+        msg_wout_user_id = split_msg
 
         if user_id:
-            pos_space = msg.find(' ')
-            msg_wout_user_id = msg[pos_space + 1:]
+            pos_space = split_msg.find(' ')
+            msg_wout_user_id = split_msg[pos_space + 1:]
             logger.info(f'Send telegram message to user_id: {user_id}')
         else:
             user_id = 'me'
-            msg_wout_user_id = 'ERROR: INCORRECT USER. MESSAGE:\n' + msg
+            msg_wout_user_id = 'ERROR: INCORRECT USER. MESSAGE:\n' + split_msg
             logger.info(f'Send telegram message with error to me')
 
         await send_telegram_message(user_id, msg_wout_user_id)
