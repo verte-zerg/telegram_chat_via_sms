@@ -66,7 +66,7 @@ def recieve_messages_api(service, after, user_id='me'):
             msg_object = (service.users().messages().get(userId=user_id, id=msg['id'])
                     .execute())
             msg_body_plain = msg_object['snippet'].strip()
-            messages[msg['id']] = msg_body_decoded
+            messages[msg['id']] = msg_body_plain
 
         return messages
     except HttpError as error:
