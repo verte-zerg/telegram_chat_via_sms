@@ -62,7 +62,7 @@ def recieve_new_messages() -> List[str]:
     old_msg_set = new_msg_set
 
     unsend_messages = []
-    for msg_id in new_msg_set:
+    for msg_id in unsend_msg_set:
         unsend_messages.append(messages[msg_id])
 
     return unsend_messages
@@ -82,7 +82,7 @@ def get_user_id(msg: str) -> Any:
 
 @logger.catch
 async def send_telegram_message(user_id: int, msg: str):
-    res = await client.send_message(user_id, msg)
+    await client.send_message(user_id, msg)
 
 
 @logger.catch
