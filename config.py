@@ -16,6 +16,7 @@ class Config:
 
     USER_MAP: Dict[str, int] = {}
 
-    for entity in os.getenv('USER_MAP').split(';'):
-        user_name, user_id = entity.split(':')
-        USER_MAP[user_name] = user_id
+    if 'USER_MAP' in os.environ:
+        for entity in os.getenv('USER_MAP').split(';'):
+            user_name, user_id = entity.split(':')
+            USER_MAP[user_name] = user_id
