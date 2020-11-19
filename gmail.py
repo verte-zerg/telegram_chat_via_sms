@@ -65,9 +65,7 @@ def recieve_messages_api(service, after, user_id='me'):
         for msg in iter_messages:
             msg_object = (service.users().messages().get(userId=user_id, id=msg['id'])
                     .execute())
-            msg_body_base64 = msg_object['payload']['parts'][0]['body']['data']
-            msg_body_plain = base64.b64decode(msg_body_base64)
-            msg_body_decoded = msg_body_plain.decode('utf8', errors="ignore").strip()
+            msg_body_plain = msg_object['snippet'].strip()
             messages[msg['id']] = msg_body_decoded
 
         return messages
